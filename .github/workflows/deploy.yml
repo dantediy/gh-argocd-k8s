@@ -40,12 +40,7 @@ jobs:
       #       ${{ github.ref_name }}
       #       ${{ steps.meta.outputs.tags }}-${{ github.ref_name }}
       #     labels: ${{ steps.meta.outputs.labels }}
-      - name: get branch name
-        id: branch
-        uses: actions/github-script@0.2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            return context.payload.ref.replace(/\/refs\/heads\/release\//, '');
       - name: Echo
-        run: echo ${{ steps.branch.outputs.result }}
+        run: |
+         echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+         echo "Tag name from github.ref_name: ${{  github.ref_name }}"
