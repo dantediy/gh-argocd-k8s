@@ -20,7 +20,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: dantediy/gh-argocd-k8s
+          images: name/app
       - name: Build and push docker images
         uses: docker/build-push-action@v4
         with:
