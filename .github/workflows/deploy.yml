@@ -40,7 +40,10 @@ jobs:
       #       ${{ github.ref_name }}
       #       ${{ steps.meta.outputs.tags }}-${{ github.ref_name }}
       #     labels: ${{ steps.meta.outputs.labels }}
+      - name: Extract branch name
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/release/})" >> $GITHUB_OUTPUT
+        id: extract_branch
       - name: Echo
         run: |
-         echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
-         echo "Tag name from github.ref_name: ${{  github.ref_name#release/ }}"
+         echo "Tag name from GITHUB_REF_NAME: $BRANCH_NAME
