@@ -46,4 +46,4 @@ jobs:
         id: extract_branch
       - name: Echo
         run: |
-         echo "Tag name from GITHUB_REF_NAME: $BRANCH_NAME
+         echo "Tag name from GITHUB_REF_NAME: $BRANCH_NAME"
