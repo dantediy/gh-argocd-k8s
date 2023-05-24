@@ -46,6 +46,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            return context.payload.ref.replace(/\/release\//, '');
+            return context.payload.ref.replace(/\/refs\/heads\/release\//, '');
       - name: Echo
         run: echo ${{ steps.branch.outputs.result }}
