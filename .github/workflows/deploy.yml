@@ -38,5 +38,5 @@ jobs:
           tags: |
             ${{ steps.meta.outputs.tags }}
             ${{ github.ref_name }}
-            ${{ steps.meta.outputs.tags }}-${{ github.ref_name }}
+            ${{ steps.meta.outputs.tags }}-${{ github.ref_name##*/ }}
           labels: ${{ steps.meta.outputs.labels }}
