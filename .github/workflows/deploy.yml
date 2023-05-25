@@ -32,15 +32,12 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=raw,value={{sha}},enable=${{ github.ref_type != 'tag' }}
 
-      - name: Extract branch name
-        # shell: bash
-        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/release/})" >> $GITHUB_OUTPUT
-        id: extract_branch
-
-      - name: Shorten sha commit
-        id: short_sha
-        run: echo "shorten=$(echo ${git rev-parse --short HEAD})" >> $GITHUB_OUTPUT
-
+      - name: Extract branch name & short sha
+        id: branch_sha
+        run: |
+          echo "branch=$(echo ${GITHUB_REF#refs/heads/release/})" >> $GITHUB_OUTPUT
+          echo "short_sha=$(echo ${git rev-parse --short HEAD})" >> $GITHUB_OUTPUT
+        
       - name: Build and push docker images
         uses: docker/build-push-action@v4
         with:
@@ -49,6 +46,7 @@ jobs:
           push: true
           tags: |
             ${{ steps.meta.outputs.tags }}
-            ${{ env.IMG_NAME }}:${{steps.extract_branch.outputs.branch}}
-            ${{ env.IMG_NAME }}:${{steps.extract_branch.outputs.branch}}-${{ steps.short_sha.outputs.shorten }}
+            ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.branch}}
+            ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.short_sha}}-${{steps.branch_sha.outputs.branch}}
+            ${{ steps.meta.outputs.tags }}-${{steps.extract_branch.outputs.branch}}
           labels: ${{ steps.meta.outputs.labels }}
