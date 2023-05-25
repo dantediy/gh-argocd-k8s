@@ -52,7 +52,18 @@ jobs:
       #       ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.branch}}-${{steps.branch_sha.outputs.e_version}}
       #     labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Checkout Config Repo
+        uses: actions/checkout@v3
+        with:
+          repository: dantediy/gh-argocd-k8s-pri
+          ref: main
+          token: ${{ secrets.GH_TOKEN }}
+
       - name: Replace version of deployment file
         run: |
-          sed -i -e 's/${e_version}/${{steps.branch_sha.outputs.e_version}}/' deployment/deployment.yml
+          sed -i -e 's/${e_version}/${{steps.branch_sha.outputs.e_version}}/' ${GITHUB_WORKSPACE}/deployment/deployment.yml
           cat deployment/deployment.yml
+
+      # - name: Push replaced deployment file to branch dev
+      #   run: |
+      #     git add deployment/*
