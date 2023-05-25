@@ -1,5 +1,5 @@
 module.exports = {
-  version: '2.47.0', // sprint number
+  version: '2.48.0', // sprint number
   vdms: {
       aaaa: process.env.hehe || 'https://asdasdasd.asdasd.com',
       bbb: '/aa/vdbbms/cc/dd/ff',
