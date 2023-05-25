@@ -61,7 +61,7 @@ jobs:
 
       - name: Replace version of config file
         run: |
-          sed -i -e 's/${e_version}/${{steps.branch_sha.outputs.e_version}}/' ${GITHUB_WORKSPACE}/deployment/deployment.yml
+          sed -i -e 's| image: .*| image: ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.e_version}} |' ${GITHUB_WORKSPACE}/deployment/deployment.yml
           cat deployment/deployment.yml
 
       - name: Push commit to config repository
