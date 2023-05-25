@@ -37,6 +37,7 @@ jobs:
         run: |
           echo "branch=$(echo ${GITHUB_REF#refs/heads/release/})" >> $GITHUB_OUTPUT
           echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "e_version=$(grep -m1 version server/core/constants/app-const.js | cut -d "'" -f2)" >> $GITHUB_OUTPUT
         
       - name: Build and push docker images
         uses: docker/build-push-action@v4
@@ -48,5 +49,5 @@ jobs:
             ${{ steps.meta.outputs.tags }}
             ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.branch}}
             ${{ steps.meta.outputs.tags }}-${{steps.extract_branch.outputs.branch}}
-            ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.sha_short}}-${{steps.branch_sha.outputs.branch}}   
+            ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.e_version}}
           labels: ${{ steps.meta.outputs.labels }}
