@@ -46,8 +46,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ steps.meta.outputs.tags }}
+            ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.branch}}-${{steps.branch_sha.outputs.sha_short}}
             ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.branch}}
-            ${{ steps.meta.outputs.tags }}-${{steps.extract_branch.outputs.branch}}
             ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.e_version}}
+            ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.branch}}-${{steps.branch_sha.outputs.e_version}}
           labels: ${{ steps.meta.outputs.labels }}
