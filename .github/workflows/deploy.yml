@@ -63,7 +63,6 @@ jobs:
         run: |
           sed -i -e 's/${e_version}/${{steps.branch_sha.outputs.e_version}}/' ${GITHUB_WORKSPACE}/deployment/deployment.yml
           cat deployment/deployment.yml
-
-      # - name: Push replaced deployment file to branch dev
-      #   run: |
-      #     git add deployment/*
+          git add deployment/*
+          git commit -m "Update to version ${{steps.branch_sha.outputs.e_version}}"
+          git push https://dantediy:${{ secrets.GH_TOKEN }}@github.com/dantediy/gh-argocd-k8s-pri.git
