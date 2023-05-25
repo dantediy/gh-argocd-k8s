@@ -59,10 +59,15 @@ jobs:
           ref: main
           token: ${{ secrets.GH_TOKEN }}
 
-      - name: Replace version of deployment file
+      - name: Replace version of config file
         run: |
           sed -i -e 's/${e_version}/${{steps.branch_sha.outputs.e_version}}/' ${GITHUB_WORKSPACE}/deployment/deployment.yml
           cat deployment/deployment.yml
+
+      - name: Push commit to config repository
+        run: |
           git add deployment/*
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git commit -m "Update to version ${{steps.branch_sha.outputs.e_version}}"
           git push https://dantediy:${{ secrets.GH_TOKEN }}@github.com/dantediy/gh-argocd-k8s-pri.git
