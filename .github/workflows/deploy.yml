@@ -36,7 +36,7 @@ jobs:
         id: branch_sha
         run: |
           echo "branch=$(echo ${GITHUB_REF#refs/heads/release/})" >> $GITHUB_OUTPUT
-          echo "short_sha=$(echo ${git rev-parse --short HEAD})" >> $GITHUB_OUTPUT
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
         
       - name: Build and push docker images
         uses: docker/build-push-action@v4
@@ -47,6 +47,6 @@ jobs:
           tags: |
             ${{ steps.meta.outputs.tags }}
             ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.branch}}
-            ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.short_sha}}-${{steps.branch_sha.outputs.branch}}
             ${{ steps.meta.outputs.tags }}-${{steps.extract_branch.outputs.branch}}
+            ${{ env.IMG_NAME }}:${{steps.branch_sha.outputs.sha_short}}-${{steps.branch_sha.outputs.branch}}   
           labels: ${{ steps.meta.outputs.labels }}
